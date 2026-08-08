@@ -13,7 +13,7 @@ def get_llm():
     )
 
 def format_docs(docs):
-    return "\n\n.join([doc.page_content for doc in docs])"
+    return "\n\n".join([doc.page_content for doc in docs])
 
 def build_rag_chain(transcript:str):
     vector_store = build_vector_store(transcript)
@@ -32,7 +32,7 @@ def build_rag_chain(transcript:str):
             
             Context from meeting transcript:
             {context}""",
-        )
+        ),
         ("human", "{question}"),
         ]
     )
@@ -66,7 +66,7 @@ def load_rag_chain():
                 
                 Context from meeting transcript:
                 {context}""",
-            )
+            ),
             ("human", "{question}"),
             ]
         )
