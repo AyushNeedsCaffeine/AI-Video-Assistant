@@ -1,6 +1,5 @@
-import os
-from langchain_chroma import Chroma 
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
@@ -14,7 +13,7 @@ def get_embeddings():
         model_kwargs = {"device": 'cpu'}
     )
 
-def build_vector_store(transcript: str)-> Chroma:
+def build_vector_store(transcript: str, collection_name: str = None) -> Chroma:
     print("Building vector store")
 
     splitter = RecursiveCharacterTextSplitter(
@@ -33,16 +32,16 @@ def build_vector_store(transcript: str)-> Chroma:
     vector_store = Chroma.from_documents(
         documents=docs,
         embedding=embeddings,
-        collection_name=COLLECTION_NAME,
+        collection_name=collection_name or COLLECTION_NAME,
         persist_directory=CHROMA_DIR
     )
 
     return vector_store
 
-def load_vector_store()->Chroma:
+def load_vector_store(collection_name: str = None) -> Chroma:
     embeddings = get_embeddings()
     vector_store = Chroma(
-        collection_name=COLLECTION_NAME,
+        collection_name=collection_name or COLLECTION_NAME,
         embedding_function=embeddings,
         persist_directory=CHROMA_DIR
     )

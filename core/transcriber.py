@@ -19,7 +19,7 @@ def load_model():
         _model = whisper.load_model(WHISPER_MODEL)
         print("Whisper Model Loaded Successfully")
 
-        return _model
+    return _model
 
 def transcribe_chunk_whisper(chunk_path: str) -> str:
     model = load_model()

@@ -15,8 +15,8 @@ def get_llm():
 def format_docs(docs):
     return "\n\n".join([doc.page_content for doc in docs])
 
-def build_rag_chain(transcript:str):
-    vector_store = build_vector_store(transcript)
+def build_rag_chain(transcript: str, collection_name: str = None):
+    vector_store = build_vector_store(transcript, collection_name=collection_name)
     retriver = get_retriver(vector_store, k=4)
     llm = get_llm()
     prompt = ChatPromptTemplate.from_messages(
@@ -48,9 +48,9 @@ def build_rag_chain(transcript:str):
 
     return rag_chain
 
-def load_rag_chain():
-    vector_store = load_vector_store()
-    retriver = get_retriver()
+def load_rag_chain(collection_name: str = None):
+    vector_store = load_vector_store(collection_name=collection_name)
+    retriver = get_retriver(vector_store)
 
     llm = get_llm()
     prompt = ChatPromptTemplate.from_messages(

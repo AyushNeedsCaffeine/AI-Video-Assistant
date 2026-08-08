@@ -21,7 +21,13 @@ def download_youtube_audio(url: str) -> str:
     }
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(url, download=True)
-        filename = ydl.prepare_filename(info).replace(".webm", ".wav").replace(".m4a", ".wav")
+        original_path = ydl.prepare_filename(info)
+        # prepare_filename() reflects the extension of the originally
+        # downloaded stream (webm/m4a/opus/...), not the postprocessor's
+        # output. The FFmpegExtractAudio postprocessor above always
+        # produces .wav, so swap the extension unconditionally rather
+        # than guessing at a couple of known source extensions.
+        filename = os.path.splitext(original_path)[0] + ".wav"
         return filename
 
 def convert_to_wav(input_path: str) -> str:
