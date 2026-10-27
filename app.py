@@ -30,6 +30,8 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+st.logo("assets/logo.svg", size="large")
  
 # -- Fonts + light polish --------------------------------------------
 # Fraunces for headings (a document/minutes feel), IBM Plex Sans for
