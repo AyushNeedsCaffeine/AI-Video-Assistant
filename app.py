@@ -1,5 +1,5 @@
 """
-AI Video Assistant — Streamlit UI
+Lens — Streamlit UI
  
 Thin UI layer over the existing core/ and utlis/ pipeline (the same
 functions main.py's CLI uses). Turns a YouTube link or local file into
@@ -25,13 +25,13 @@ from core.extractor import extract_action_items, extract_key_decisions, extract_
 from core.rag_engine import build_rag_chain, ask_question
  
 st.set_page_config(
-    page_title="AI Video Assistant",
-    page_icon="🎥",
+    page_title="Lens",
+    page_icon="assets/Lens logo.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-st.logo("assets/logo.svg", size="large")
+st.logo("assets/Lens logo.png", size="large")
  
 # -- Fonts + light polish --------------------------------------------
 # Fraunces for headings (a document/minutes feel), IBM Plex Sans for
@@ -205,8 +205,8 @@ if process_clicked:
                 os.remove(temp_path)
  
 # -- Main area --------------------------------------------------------------
-st.markdown("# AI Video Assistant")
-st.caption("Turn a video or recording into a transcript, a structured summary, and a chat you can ask questions to.")
+st.markdown("# Lens")
+st.caption("Watch less. Understand more. Turn a video or recording into a transcript, a structured summary, and a chat you can ask questions to.")
  
 result = st.session_state.pipeline_result
  

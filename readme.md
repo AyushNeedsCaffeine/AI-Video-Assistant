@@ -1,5 +1,7 @@
-# AI Video Assistant
- 
+# Lens
+
+**Watch Less. Understand More.**
+
 Turn any video or meeting recording into a searchable transcript, an AI-generated summary, and a chatbot you can ask questions to.
  
 Give it a YouTube link or a local audio/video file. It transcribes the audio, generates a title, summary, action items, key decisions, and open questions — then lets you chat with the transcript afterward.
@@ -30,9 +32,11 @@ flowchart LR
 ## Project structure
  
 ```
-AI-Video-Assistant/
+Lens/
 ├── main.py                   # CLI entry point — runs the pipeline, then a chat loop
 ├── app.py                    # Streamlit UI — process a video and chat with it in the browser
+├── assets/                   # Lens branding assets
+├── docs/SRS.md               # Software requirements and future roadmap
 ├── requirements.txt
 ├── .streamlit/
 │   └── config.toml           # UI theme

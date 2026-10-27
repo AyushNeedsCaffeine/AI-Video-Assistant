@@ -1,6 +1,6 @@
 # Software Requirements Specification
 
-**Project:** AI Video Assistant — Meeting Intelligence Platform  
+**Project:** Lens — Meeting Intelligence Platform  
 **Document version:** 1.0  
 **Product baseline:** v1.0.0  
 **Date:** 2026-10-27  
@@ -12,7 +12,7 @@
 
 ### 1.1 Purpose
 
-This document specifies the functional and non-functional requirements for AI Video Assistant, a web application that turns a video or meeting recording into a transcript, summary, action items, key decisions, open questions, and a searchable meeting chat.
+This document specifies the functional and non-functional requirements for Lens, a web application that turns a video or meeting recording into a transcript, summary, action items, key decisions, open questions, and a searchable meeting chat.
 
 It also defines the planned v2 interface, the deferred Google Meet bot, and the future evaluation strategy using LangSmith.
 
@@ -81,7 +81,7 @@ It also defines the planned v2 interface, the deferred Google Meet bot, and the 
 
 ### 2.1 Product Perspective
 
-AI Video Assistant is a local-first, single-user meeting intelligence application. v1 is implemented with Streamlit and the existing Python pipeline. v2 replaces the presentation layer with a FastAPI/Jinja2 application while reusing the pipeline.
+Lens is a local-first, single-user meeting intelligence application. v1 is implemented with Streamlit and the existing Python pipeline. v2 replaces the presentation layer with a FastAPI/Jinja2 application while reusing the pipeline.
 
 The architecture is intentionally provider-agnostic so that future meeting sources (uploads, YouTube, and meeting bots) use the same transcription, summarization, extraction, and retrieval services.
 
@@ -431,4 +431,4 @@ FastAPI + Uvicorn + Jinja2
 | Role | Name | Date |
 |---|---|---|
 | Project owner | Ayush Jain | 2026-10-27 |
-| Implementation | AI Video Assistant engineering | 2026-10-27 |
+| Implementation | Lens engineering | 2026-10-27 |

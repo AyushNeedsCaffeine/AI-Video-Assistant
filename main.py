@@ -14,7 +14,7 @@ from core.rag_engine import build_rag_chain, ask_question
 
 def run_pipeline(source: str, language: str = "english") -> dict:
     try:
-        print("Starting AI Video Assistant")
+        print("Starting Lens")
 
         chunks = process_input(source)
         transcript = transcribe_all(chunks, language)
