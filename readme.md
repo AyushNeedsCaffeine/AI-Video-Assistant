@@ -117,6 +117,16 @@ Alternatively, create a native Linux virtualenv with Python 3.12 and install the
 - **Vector search:** [Chroma](https://www.trychroma.com/), HuggingFace `sentence-transformers` (`all-MiniLM-L6-v2`)
 - **Audio/video handling:** `yt-dlp`, `pydub`, `ffmpeg`
 - **UI:** [Streamlit](https://streamlit.io/)
+## Documentation
+
+- [Software Requirements Specification](docs/SRS.md) — v1 baseline, v2 interface plan, and future scope for the Google Meet bot and LangSmith evaluation.
+
+## Version roadmap
+
+- **v1.0.0** — current Streamlit app and CLI, runtime/config fixes, yt-dlp update, SRS
+- **v2.0.0** — new FastAPI + Jinja2 + HTMX interface with improved UX; pipeline behavior unchanged
+- **Future** — Google Meet bot (live capture) and LangSmith-based evaluation/regression testing
+
 ## Roadmap / known issues
 
 - [x] `requirements.txt` was missing `langchain-chroma` — added, and all versions are now pinned against a verified-working install (see the comment at the top of the file for CPU-only PyTorch install instructions)
