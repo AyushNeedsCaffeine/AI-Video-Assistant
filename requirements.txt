@@ -1,10 +1,13 @@
+# Requires Python 3.12 — the pins below are verified against 3.12. Newer
+# interpreters may not have compatible wheels (e.g. openai-whisper on 3.14).
+#
 # Install with uv (this project's dev setup) — resolves a CPU-only
 # PyTorch build so you don't pull several GB of unneeded CUDA packages:
 #   uv pip install --torch-backend=cpu -r requirements.txt
 # Skip the flag only if you have an NVIDIA GPU and want CUDA acceleration.
 #
 # With plain pip, install the CPU build of torch first, then the rest:
-#   pip install torch==2.13.0 torchaudio==2.11.0 --index-url https://download.pytorch.org/whl/cpu
+#   pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu
 #   pip install -r requirements.txt
 #
 # langchain-chroma was previously missing here (see README) — added below.
@@ -155,7 +158,6 @@ tiktoken==0.13.0
 tokenizers==0.22.2
 toml==0.10.2
 torch==2.13.0
-torchaudio==2.11.0
 tqdm==4.70.0
 transformers==5.14.1
 typer==0.27.1
@@ -171,6 +173,6 @@ websocket-client==1.9.0
 websockets==15.0.1
 xxhash==3.8.1
 yarl==1.24.5
-yt-dlp==2026.7.4
+yt-dlp==2026.10.26
 zipp==4.1.0
 zstandard==0.25.0

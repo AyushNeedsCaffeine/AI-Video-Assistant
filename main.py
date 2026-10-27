@@ -1,11 +1,16 @@
+import uuid
+
 from dotenv import load_dotenv
+
+# Load .env before importing project modules: core.transcriber reads
+# environment variables, and imports below must see the loaded values.
+load_dotenv()
+
 from utlis.audio_processor import process_input
 from core.transcriber import transcribe_all
 from core.Summarize import summarize, generate_title
 from core.extractor import extract_action_items, extract_key_decisions, extract_questions
 from core.rag_engine import build_rag_chain, ask_question
-
-load_dotenv()
 
 def run_pipeline(source: str, language: str = "english") -> dict:
     try:
@@ -20,7 +25,10 @@ def run_pipeline(source: str, language: str = "english") -> dict:
         decisions = extract_key_decisions(transcript)
         questions = extract_questions(transcript)
 
-        rag_chain = build_rag_chain(transcript)
+        # Isolated collection per run so chat never pulls in chunks from a
+        # previously processed video.
+        collection_name = f"session_{uuid.uuid4().hex[:10]}"
+        rag_chain = build_rag_chain(transcript, collection_name=collection_name)
 
         return {
             "title": title,

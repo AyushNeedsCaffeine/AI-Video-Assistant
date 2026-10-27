@@ -48,7 +48,7 @@ AI-Video-Assistant/
  
 ## Prerequisites
  
-- Python 3.10+
+- Python 3.12 (the pinned dependencies are verified on 3.12; newer versions may not have compatible wheels)
 - [ffmpeg](https://ffmpeg.org/download.html) installed and on your `PATH` (required by `pydub` and `yt-dlp`)
 - A [Mistral AI](https://console.mistral.ai/) API key — used for summarization, extraction, and chat
 - A [Sarvam AI](https://www.sarvam.ai/) API key — only needed for Hinglish transcription
@@ -73,6 +73,7 @@ cp .env.example .env
 | Variable | Required | Default | Description |
 |---|---|---|---|
 | `MISTRAL_API_KEY` | Yes | — | Summaries, extraction, and RAG chat |
+| `MISTRAL_MODEL` | No | `ministral-8b-latest` | Mistral chat model — must be available to your API key's tier |
 | `SARVAM_API_KEY` | Only for Hinglish | — | Hinglish transcription |
 | `WHISPER_MODEL` | No | `small` | Any [Whisper model size](https://github.com/openai/whisper#available-models-and-languages) (`tiny`/`base`/`small`/`medium`/`large`) |
 | `SARVAM_STT_MODEL` | No | `saaras:v2.5` | Sarvam speech-to-text model |
@@ -98,6 +99,17 @@ streamlit run app.py
 
 Enter a YouTube URL or upload a local file in the sidebar, pick a language, and click **Process video**. Once it finishes you'll get tabs for the summary, action items, key decisions, open questions, and full transcript, a chat box for follow-up questions, and download buttons for the transcript and a combined meeting-minutes file. Theme lives in `.streamlit/config.toml`.
 
+### Running from WSL
+
+If the project lives on a Windows drive but you're in a WSL shell, the existing `.venv` is a Windows virtualenv. Use its interpreter directly (WSL interop):
+
+```bash
+./.venv/Scripts/python.exe -m streamlit run app.py   # UI
+./.venv/Scripts/python.exe main.py                   # CLI
+```
+
+Alternatively, create a native Linux virtualenv with Python 3.12 and install the requirements there.
+
 ## Tech stack
  
 - **Transcription:** [OpenAI Whisper](https://github.com/openai/whisper), [Sarvam AI](https://www.sarvam.ai/)
@@ -115,6 +127,9 @@ Enter a YouTube URL or upload a local file in the sidebar, pick a language, and 
 - [x] Switched `HuggingFaceEmbeddings` to the maintained `langchain_huggingface` package (the `langchain_community` import path is being sunset)
 - [x] Renamed `env.example` → `.env.example` so `cp .env.example .env` in Configuration actually works
 - [x] Made the YouTube download step's filename handling robust to any source container (previously only handled `.webm`/`.m4a` by name)
+- [x] Made the Mistral model configurable via `MISTRAL_MODEL` — `mistral-small-latest` is not available on every API key tier and caused HTTP 429s
+- [x] Fixed `.env` load ordering so `SARVAM_API_KEY`, `WHISPER_MODEL`, and `SARVAM_STT_MODEL` are read after `load_dotenv()`
+- [x] Updated `yt-dlp` to 2026.10.26 — older versions failed YouTube downloads with `HTTP Error 403: Forbidden`
 ## License
  
 No license file is included yet. Until one is added, all rights are reserved by default — add a `LICENSE` file (e.g. MIT, Apache-2.0) if you'd like others to use or contribute to this project.

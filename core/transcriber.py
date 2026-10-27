@@ -4,19 +4,18 @@ import requests
 from pydub import AudioSegment
 
 SARVAM_PIECE_SECONDS = 25
-
-WHISPER_MODEL = os.getenv("WHISPER_MODEL", "small")
+SARVAM_STT_TRANSLATE_URL = "https://api.sarvam.ai/speech-to-text-translate"
 
 _model = None
-SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
-SARVAM_STT_TRANSLATE_URL = "https://api.sarvam.ai/speech-to-text-translate"
-SARVAM_MODEL = os.getenv("SARVAM_STT_MODEL", "saaras:v2.5")
+_model_name = None
 
 def load_model():
-    global _model
-    if _model is None:
-        print(f"Loading Whisper Model: {WHISPER_MODEL}...")
-        _model = whisper.load_model(WHISPER_MODEL)
+    global _model, _model_name
+    model_name = os.getenv("WHISPER_MODEL", "small")
+    if _model is None or _model_name != model_name:
+        print(f"Loading Whisper Model: {model_name}...")
+        _model = whisper.load_model(model_name)
+        _model_name = model_name
         print("Whisper Model Loaded Successfully")
 
     return _model
@@ -29,11 +28,13 @@ def transcribe_chunk_whisper(chunk_path: str) -> str:
     return result['text']
 
 def _send_to_sarvam(piece_path:str)-> str:
-    headers = {"api-subscription-key":SARVAM_API_KEY}
+    api_key = os.getenv("SARVAM_API_KEY")
+    model_name = os.getenv("SARVAM_STT_MODEL", "saaras:v2.5")
+    headers = {"api-subscription-key": api_key}
 
     with open(piece_path, 'rb') as f:
         files= {'file': (os.path.basename(piece_path), f, "audio/wav")}
-        data = {"model": SARVAM_MODEL, "with_diarization": 'false'}
+        data = {"model": model_name, "with_diarization": 'false'}
         response = requests.post(
             SARVAM_STT_TRANSLATE_URL,
             headers=headers,
@@ -50,7 +51,7 @@ def _send_to_sarvam(piece_path:str)-> str:
         return response.json().get("transcript", "")
 
 def transcribe_chunk_sarvam(chunk_path: str)-> str:
-    if not SARVAM_API_KEY:
+    if not os.getenv("SARVAM_API_KEY"):
         raise RuntimeError("SARVAM_API_KEY is not set in environment /.env")
 
     audio = AudioSegment.from_wav(chunk_path)

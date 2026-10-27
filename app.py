@@ -13,14 +13,16 @@ import uuid
  
 import streamlit as st
 from dotenv import load_dotenv
- 
+
+# Load .env before importing project modules: core.transcriber reads
+# environment variables, and imports below must see the loaded values.
+load_dotenv()
+
 from utlis.audio_processor import process_input
 from core.transcriber import transcribe_all
 from core.Summarize import summarize, generate_title
 from core.extractor import extract_action_items, extract_key_decisions, extract_questions
 from core.rag_engine import build_rag_chain, ask_question
- 
-load_dotenv()
  
 st.set_page_config(
     page_title="AI Video Assistant",
