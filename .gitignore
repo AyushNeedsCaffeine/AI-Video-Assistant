@@ -1,4 +1,5 @@
 .env
+data/
 downloades/
 vector_db/
 __pycache__/

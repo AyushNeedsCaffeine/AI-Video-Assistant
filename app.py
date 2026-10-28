@@ -26,12 +26,12 @@ from core.rag_engine import build_rag_chain, ask_question
  
 st.set_page_config(
     page_title="Lens",
-    page_icon="assets/Lens logo.png",
+    page_icon="assets/Lens1.1 Logo.png",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-st.logo("assets/Lens logo.png", size="large")
+st.logo("assets/Lens1.1 Logo.png", size="large")
  
 # -- Fonts + light polish --------------------------------------------
 # Fraunces for headings (a document/minutes feel), IBM Plex Sans for

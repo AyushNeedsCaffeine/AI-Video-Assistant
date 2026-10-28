@@ -36,6 +36,7 @@ defusedxml==0.7.1
 distro==1.9.0
 durationpy==0.10
 eval_type_backport==0.4.0
+fastapi==0.162.0
 ffmpeg-python==0.2.0
 filelock==3.32.2
 flatbuffers==25.12.19
@@ -84,6 +85,7 @@ langgraph-prebuilt==1.1.0
 langgraph-sdk==0.4.2
 langsmith==0.10.17
 llvmlite==0.48.0
+markdown==3.11.2
 markdown-it-py==4.2.0
 MarkupSafe==3.0.3
 mdurl==0.1.2

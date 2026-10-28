@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Lens · Watch less. Understand more.{% endblock %}
+
+{% block header_actions %}
+<a href="#start" class="btn-ghost">New session</a>
+{% endblock %}
+
+{% block content %}
+<section class="relative overflow-hidden">
+  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[32rem] bg-[radial-gradient(60%_60%_at_70%_10%,rgba(242,106,27,.14),transparent_65%),radial-gradient(50%_50%_at_20%_20%,rgba(29,78,216,.10),transparent_60%)]"></div>
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 pb-10 pt-12 lg:grid-cols-[1.05fr_.95fr] lg:pb-16 lg:pt-20">
+    <div>
+      <span class="badge">Meeting intelligence, in focus</span>
+      <h1 class="mt-5 max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+        Turn any recording into <span class="text-accent">what matters.</span>
+      </h1>
+      <p class="mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg">
+        Lens transcribes, summarizes, and indexes your meetings, lectures, and calls — then answers questions using only what was actually said.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-2 text-xs font-semibold text-ink">
+        <span class="chip">Transcript</span>
+        <span class="chip">Summary</span>
+        <span class="chip">Action items</span>
+        <span class="chip">Key decisions</span>
+        <span class="chip">Ask anything</span>
+      </div>
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a href="#start" class="btn-primary">Process a recording</a>
+        <span class="text-xs text-muted">YouTube links or local audio/video · up to 500 MB</span>
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute inset-6 -z-10 rounded-[3rem] bg-gradient-to-br from-accent/15 via-white to-blue/10 blur-2xl"></div>
+      <div class="mx-auto max-w-[22rem] rounded-[2rem] border border-sand bg-white/70 p-5 shadow-soft backdrop-blur sm:max-w-md sm:p-8">
+        <img src="/static/img/lens-logo.png" alt="Lens — Watch less. Understand more." class="mx-auto w-full">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="mx-auto max-w-3xl scroll-mt-24 px-5 pb-16">
+  <div class="overflow-hidden rounded-3xl border border-sand bg-white shadow-soft">
+    <div class="p-6 sm:p-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 class="text-2xl font-semibold tracking-tight">Start a new session</h2>
+          <p class="mt-1 text-sm text-muted">Choose a source and Lens will take it from there.</p>
+        </div>
+        <span class="pill pill-neutral">No account needed</span>
+      </div>
+
+      {% if error %}
+      <div class="alert-error mt-5" role="alert">
+        <span class="alert-dot"></span>
+        <p>{{ error }}</p>
+      </div>
+      {% endif %}
+
+      <form
+        action="/process"
+        method="post"
+        enctype="multipart/form-data"
+        class="mt-6 space-y-5"
+        x-data="{ source: 'youtube', submitting: false }"
+        @submit="submitting = true"
+      >
+        <div class="segmented" role="tablist" aria-label="Recording source">
+          <button type="button" class="seg-btn" :class="source === 'youtube' ? 'is-active' : ''" @click="source = 'youtube'">
+            YouTube link
+          </button>
+          <button type="button" class="seg-btn" :class="source === 'upload' ? 'is-active' : ''" @click="source = 'upload'">
+            Upload file
+          </button>
+        </div>
+
+        <div x-show="source === 'youtube'" x-cloak>
+          <label for="youtube_url" class="field-label">YouTube URL</label>
+          <input
+            id="youtube_url"
+            name="youtube_url"
+            type="url"
+            inputmode="url"
+            autocomplete="off"
+            placeholder="https://www.youtube.com/watch?v=..."
+            value="{{ youtube_url }}"
+            class="field mt-2"
+            :disabled="source !== 'youtube'"
+            :required="source === 'youtube'"
+          >
+          <p class="field-hint">Public videos only. Lens downloads the audio locally before transcribing.</p>
+        </div>
+
+        <div x-show="source === 'upload'" x-cloak>
+          <label for="file" class="field-label">Audio or video file</label>
+          <input
+            id="file"
+            name="file"
+            type="file"
+            accept=".mp4,.mkv,.mov,.webm,.avi,.mp3,.wav,.m4a,.aac,.flac,.ogg"
+            class="field file-field mt-2"
+            :disabled="source !== 'upload'"
+            :required="source === 'upload'"
+          >
+          <p class="field-hint">MP4, MKV, MOV, WebM, AVI, MP3, WAV, M4A, AAC, FLAC, or OGG. Maximum 500 MB.</p>
+        </div>
+
+        <div class="grid items-end gap-4 sm:grid-cols-[1fr_auto]">
+          <div>
+            <label for="language" class="field-label">Transcription engine</label>
+            <select id="language" name="language" class="field mt-2">
+              {% for value, label in languages %}
+              <option value="{{ value }}" {% if value == selected_language %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+            <p class="field-hint">Use Sarvam for Hinglish and Indic-language recordings.</p>
+          </div>
+          <button type="submit" class="btn-primary h-[46px] whitespace-nowrap" :disabled="submitting">
+            <span x-show="!submitting">Process recording</span>
+            <span x-show="submitting" x-cloak>Starting…</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="border-t border-sand bg-paper/70 px-6 py-4 text-xs leading-5 text-muted sm:px-8">
+      Your recording is processed on this machine. A job link is created so you can return to the results while the server is running.
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-6xl px-5 pb-20">
+  <div class="grid gap-4 md:grid-cols-3">
+    <article class="card p-6">
+      <span class="feature-icon">01</span>
+      <h3 class="mt-4 text-base font-semibold">Understand the whole conversation</h3>
+      <p class="mt-2 text-sm leading-6 text-muted">A clean transcript, a tight summary, and the decisions that actually mattered.</p>
+    </article>
+    <article class="card p-6">
+      <span class="feature-icon">02</span>
+      <h3 class="mt-4 text-base font-semibold">Leave with next steps</h3>
+      <p class="mt-2 text-sm leading-6 text-muted">Action items, owners, and open questions pulled out of the noise automatically.</p>
+    </article>
+    <article class="card p-6">
+      <span class="feature-icon">03</span>
+      <h3 class="mt-4 text-base font-semibold">Ask the recording anything</h3>
+      <p class="mt-2 text-sm leading-6 text-muted">Chat against the transcript and get answers grounded in what was said — nothing else.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}

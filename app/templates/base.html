@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Lens{% endblock %}</title>
+  <meta name="description" content="Lens turns recordings into transcripts, summaries, decisions, action items, and answers. Watch less. Understand more.">
+  <link rel="icon" type="image/png" href="/static/img/lens-mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#111C33",
+            accent: "#F26A1B",
+            "accent-dark": "#D4550D",
+            blue: "#1D4ED8",
+            paper: "#F7F6F3",
+            sand: "#E9E5DE",
+            muted: "#667085",
+          },
+          fontFamily: {
+            sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+          },
+          boxShadow: {
+            soft: "0 1px 2px rgba(17,28,51,.04), 0 18px 48px rgba(17,28,51,.08)",
+          },
+        },
+      },
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js"></script>
+  <link rel="stylesheet" href="/static/css/app.css">
+  {% block head %}{% endblock %}
+</head>
+<body class="flex min-h-full flex-col bg-paper font-sans text-ink antialiased">
+  <header class="sticky top-0 z-30 border-b border-sand/80 bg-paper/90 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
+      <form action="/session/reset" method="post" onsubmit="return confirm('Start a new session? You will return to the home screen.');">
+        <button type="submit" class="brand-button group flex items-center gap-3 rounded-2xl p-1 pr-3 text-left" title="Start a new session">
+          <img src="/static/img/lens-mark.png" alt="" class="h-11 w-11 rounded-xl object-contain">
+          <span class="hidden leading-tight sm:block">
+            <span class="block text-lg font-semibold tracking-tight text-ink">Lens</span>
+            <span class="block text-[11px] font-medium tracking-wide text-muted">Watch less. Understand more.</span>
+          </span>
+        </button>
+      </form>
+      <div class="flex items-center gap-2">
+        {% block header_actions %}{% endblock %}
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="border-t border-sand/80">
+    <div class="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>Lens · Watch less. Understand more.</p>
+      <p>FastAPI · Mistral · Sarvam · Whisper</p>
+    </div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

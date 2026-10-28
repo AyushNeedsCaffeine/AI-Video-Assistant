@@ -152,7 +152,7 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 | FR-18 | The UI shall be rendered with Jinja2 templates and enhanced with HTMX, Alpine.js, and vanilla JavaScript. | Must |
 | FR-19 | The system shall show live stage progress using SSE or WebSocket events. | Must |
 | FR-20 | The system shall run processing in a background job and return a job identifier immediately. | Must |
-| FR-21 | The system shall persist job status and results locally. | Should |
+| FR-21 | The system should persist job status and results locally. v2.0 uses an in-memory job store; durable storage is planned for v2.1. | Should |
 | FR-22 | The UI shall display a branded logo on all pages. | Must |
 | FR-23 | Clicking the logo shall show a confirmation dialog and perform a soft reset. | Must |
 | FR-24 | A soft reset shall clear the current session/job reference and return to the landing page without terminating the server or affecting other sessions. | Must |
@@ -191,10 +191,11 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 | POST | `/process` | Start a job from a URL or uploaded file |
 | GET | `/jobs/{job_id}` | Job status and results |
 | GET | `/jobs/{job_id}/events` | SSE progress stream |
-| POST | `/jobs/{job_id}/cancel` | Request cancellation |
-| POST | `/chat` | Ask a question about a completed job |
+| GET | `/api/jobs/{job_id}` | JSON status for polling fallback |
+| POST | `/jobs/{job_id}/chat` | Ask a question about a completed job (HTMX partial or redirect) |
 | POST | `/session/reset` | Soft reset |
-| GET | `/download/{job_id}/{artifact}` | Download transcript or minutes |
+| GET | `/jobs/{job_id}/download/{artifact}` | Download minutes, summary, transcript, or chat |
+| POST | `/jobs/{job_id}/cancel` | Request cancellation (planned for v2.1) |
 | GET | `/health` | Health check |
 | POST | `/webhooks/meet` | Future meeting-bot webhook (disabled by default) |
 
@@ -287,7 +288,7 @@ FastAPI + Uvicorn + Jinja2
         |                              |
         |                              +--> Mistral, Sarvam, Whisper, Chroma
         |
-        +-- SQLite (v2)
+        +-- In-memory job store (v2.0) / SQLite (v2.1)
         +-- Templates and static assets
 ```
 
@@ -395,7 +396,8 @@ FastAPI + Uvicorn + Jinja2
 - Results and chat are available in the new interface.
 - Clicking the logo provides a confirmation and performs a soft reset without terminating the server.
 - The existing pipeline behavior is preserved.
-- Basic automated tests and a Docker deployment path exist.
+- Chat works both with HTMX progressive enhancement and with a plain form-post fallback.
+- Persistence, cancellation, automated tests, and a Docker deployment path are scheduled for v2.1.
 
 ---
 
