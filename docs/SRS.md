@@ -30,10 +30,10 @@ It also defines the planned v2 interface, the deferred Google Meet bot, and the 
 - Per-meeting Chroma vector index and RAG chat over the transcript
 - Downloadable transcript and meeting minutes
 
-**v2.0.0 (planned)**
+**v2.0.x (implemented)**
 
-- New Python-first web interface using FastAPI, Uvicorn, Jinja2, HTMX, Alpine.js, Tailwind CSS, and vanilla JavaScript
-- Improved navigation, progress feedback, result presentation, and chat experience
+- New Python-first web interface using FastAPI, Uvicorn, Jinja2, HTMX, Alpine.js, Tailwind CSS, GSAP, and vanilla JavaScript
+- Improved navigation, animated progress feedback, tabbed result presentation, and chat experience
 - Branded logo and a soft-reset action
 - Background job handling with progress events
 - Same meeting-intelligence features as v1
@@ -149,17 +149,19 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 | ID | Requirement | Priority |
 |---|---|---|
 | FR-17 | The system shall serve the UI through FastAPI and Uvicorn. | Must |
-| FR-18 | The UI shall be rendered with Jinja2 templates and enhanced with HTMX, Alpine.js, and vanilla JavaScript. | Must |
+| FR-18 | The UI shall be rendered with Jinja2 templates and enhanced with HTMX, Alpine.js, Tailwind CSS, GSAP, and vanilla JavaScript. | Must |
 | FR-19 | The system shall show live stage progress using SSE or WebSocket events. | Must |
 | FR-20 | The system shall run processing in a background job and return a job identifier immediately. | Must |
 | FR-21 | The system should persist job status and results locally. v2.0 uses an in-memory job store; durable storage is planned for v2.1. | Should |
 | FR-22 | The UI shall display a branded logo on all pages. | Must |
 | FR-23 | Clicking the logo shall show a confirmation dialog and perform a soft reset. | Must |
 | FR-24 | A soft reset shall clear the current session/job reference and return to the landing page without terminating the server or affecting other sessions. | Must |
-| FR-25 | The UI shall provide result tabs for summary, action items, decisions, questions, and transcript. | Must |
-| FR-26 | The UI shall provide chat with streaming or progressive responses where practical. | Should |
+| FR-25 | The UI shall provide result tabs for summary, action items, decisions, questions, transcript, and downloads. | Must |
+| FR-26 | The UI shall provide chat with in-place HTMX updates and a non-JavaScript form fallback. | Must |
 | FR-27 | The UI shall remain usable on desktop and narrow browser widths. | Should |
 | FR-28 | The existing Streamlit UI may remain available until feature parity is reached. | Could |
+| FR-29 | The prominent processing state shall include an animated lens/fox loader and per-stage progress. | Should |
+| FR-30 | The chat input shall send on Enter and insert a newline on Shift + Enter. | Should |
 
 ### 3.3 Logo Behavior
 
@@ -177,9 +179,10 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 ### 4.1 User Interface
 
 - Landing page with source selector (YouTube URL or file upload), language selector, and start action
-- Processing page with stage tracker and cancellation where supported
-- Results page with tabs and copy/download actions
-- Chat panel with message history and anchored answers
+- Processing page with an animated loader, stage tracker, and cancellation where supported
+- Results page with tabs for summary, action items, key decisions, open questions, transcript, and downloads
+- Chat panel below the results with message history, anchored answers, Enter-to-send, and Shift + Enter for new lines
+- Navy/orange/brown visual theme with reduced-motion-aware GSAP animations
 - Logo with soft-reset confirmation
 - Clear error messages and retry affordances
 
@@ -237,7 +240,7 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 | NFR-11 | Maintainability | UI, API, and pipeline logic are separated into distinct modules |
 | NFR-12 | Portability | The application runs on Windows, WSL/Linux, and Docker |
 | NFR-13 | Observability | Jobs have identifiers and structured logs; a health endpoint is available |
-| NFR-14 | Accessibility | Keyboard navigation and readable contrast are supported |
+| NFR-14 | Accessibility | Keyboard navigation and readable contrast are supported; animations respect `prefers-reduced-motion` |
 | NFR-15 | Compatibility | The application targets Python 3.12 and the pinned dependency set |
 
 ---
@@ -278,7 +281,7 @@ core pipeline: audio -> transcription -> LLM -> Chroma/RAG
 ### 7.2 v2
 
 ```
-Browser (HTML/CSS/JS, HTMX, Alpine.js)
+Browser (HTML/CSS/JS, HTMX, Alpine.js, GSAP)
         |
         v
 FastAPI + Uvicorn + Jinja2

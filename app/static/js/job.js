@@ -16,15 +16,22 @@
     }, 1600);
   });
 
+  document.addEventListener("keydown", (event) => {
+    if (!(event.target instanceof Element)) return;
+    const textarea = event.target.closest("#message");
+    if (!textarea) return;
+    if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
+    event.preventDefault();
+    const form = textarea.form;
+    if (form && !form.classList.contains("htmx-request")) form.requestSubmit();
+  });
+
   const scrollChat = () => {
     const scroller = document.getElementById("chat-scroll");
     if (scroller) scroller.scrollTop = scroller.scrollHeight;
   };
 
-  const chatTab = document.querySelector("[data-chat-tab]");
-  if (chatTab) {
-    chatTab.addEventListener("click", () => window.setTimeout(scrollChat, 60));
-  }
+  scrollChat();
 
   document.body.addEventListener("htmx:afterSwap", (event) => {
     if (event.detail && event.detail.target && event.detail.target.id === "chat-panel") {
