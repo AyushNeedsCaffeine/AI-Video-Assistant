@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Lens{% endblock %}</title>
   <meta name="description" content="Lens turns recordings into transcripts, summaries, decisions, action items, and answers. Watch less. Understand more.">
-  <meta name="theme-color" content="#101B33">
+  <meta name="theme-color" content="#090D16">
   <link rel="icon" type="image/png" href="/static/img/lens-mark.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,23 +16,24 @@
       theme: {
         extend: {
           colors: {
-            ink: "#101B33",
-            "ink-soft": "#1C2A47",
-            accent: "#F26A1B",
-            "accent-dark": "#D4550D",
-            brown: "#6B3F2A",
-            "brown-light": "#8B5A3C",
-            "brown-soft": "#F4EBE1",
-            blue: "#1D4ED8",
-            paper: "#F7F4EF",
-            sand: "#E8DFD2",
-            muted: "#667085",
+            ink: "#F5EFE6",
+            "ink-soft": "#D8D2C9",
+            accent: "#FF7A1A",
+            "accent-soft": "#FFB073",
+            "accent-dark": "#E85F0C",
+            brown: "#C08A66",
+            "brown-light": "#D6A17B",
+            "brown-soft": "#2A1D18",
+            blue: "#7AA2FF",
+            paper: "#090D16",
+            sand: "#2A3652",
+            surface: "#131B2C",
+            "surface-2": "#19233A",
+            "surface-3": "#212D47",
+            muted: "#98A3B8",
           },
           fontFamily: {
             sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-          },
-          boxShadow: {
-            soft: "0 1px 2px rgba(17,28,51,.04), 0 18px 48px rgba(17,28,51,.08)",
           },
         },
       },
@@ -46,7 +47,7 @@
   {% block head %}{% endblock %}
 </head>
 <body class="flex min-h-full flex-col bg-paper font-sans text-ink antialiased">
-  <header class="sticky top-0 z-30 border-b border-sand/80 bg-paper/90 backdrop-blur">
+  <header class="sticky top-0 z-30 border-b border-sand bg-paper">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
       <form action="/session/reset" method="post" onsubmit="return confirm('Start a new session? You will return to the home screen.');">
         <button type="submit" class="brand-button group flex items-center gap-3 rounded-2xl p-1 pr-3 text-left" title="Start a new session">
@@ -61,7 +62,7 @@
         {% block header_actions %}{% endblock %}
       </div>
     </div>
-    <div class="h-[3px] bg-gradient-to-r from-ink via-accent to-brown"></div>
+    <div class="h-[2px] bg-accent"></div>
   </header>
 
   <main class="flex-1">

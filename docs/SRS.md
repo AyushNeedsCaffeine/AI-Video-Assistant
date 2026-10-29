@@ -34,6 +34,7 @@ It also defines the planned v2 interface, the deferred Google Meet bot, and the 
 
 - New Python-first web interface using FastAPI, Uvicorn, Jinja2, HTMX, Alpine.js, Tailwind CSS, GSAP, and vanilla JavaScript
 - Improved navigation, animated progress feedback, tabbed result presentation, and chat experience
+- Flat matte dark navy/orange/brown interface with solid surfaces, crisp borders, clear hover/focus states, and reduced-motion support
 - Branded logo and a soft-reset action
 - Background job handling with progress events
 - Same meeting-intelligence features as v1
@@ -162,6 +163,7 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 | FR-28 | The existing Streamlit UI may remain available until feature parity is reached. | Could |
 | FR-29 | The prominent processing state shall include an animated lens/fox loader and per-stage progress. | Should |
 | FR-30 | The chat input shall send on Enter and insert a newline on Shift + Enter. | Should |
+| FR-31 | The web UI shall use a flat matte dark navy/orange/brown theme with visible hover and focus states. | Should |
 
 ### 3.3 Logo Behavior
 
@@ -182,7 +184,7 @@ The architecture is intentionally provider-agnostic so that future meeting sourc
 - Processing page with an animated loader, stage tracker, and cancellation where supported
 - Results page with tabs for summary, action items, key decisions, open questions, transcript, and downloads
 - Chat panel below the results with message history, anchored answers, Enter-to-send, and Shift + Enter for new lines
-- Navy/orange/brown visual theme with reduced-motion-aware GSAP animations
+- Flat matte dark navy/orange/brown visual theme with solid surfaces, crisp borders, clear hover/focus states, and reduced-motion-aware GSAP animations
 - Logo with soft-reset confirmation
 - Clear error messages and retry affordances
 
