@@ -100,12 +100,13 @@ textarea {
 .badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  border: 1px solid rgba(255, 122, 26, 0.32);
+  border: 2px solid rgba(255, 122, 26, 0.4);
   background: rgba(255, 122, 26, 0.12);
   color: var(--orange-soft);
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
+  border-radius: 0.55rem;
+  padding: calc(0.35rem - 1px) calc(0.75rem - 1px);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.09em;
@@ -115,11 +116,12 @@ textarea {
 .chip {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--border);
+  justify-content: center;
+  border: 2px solid var(--border);
   background: var(--surface);
   color: var(--text-soft);
-  border-radius: 999px;
-  padding: 0.4rem 0.7rem;
+  border-radius: 0.55rem;
+  padding: calc(0.4rem - 1px) calc(0.7rem - 1px);
   transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
 }
 
@@ -159,24 +161,25 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border-radius: 0.85rem;
-  padding: 0.7rem 1.05rem;
+  border-radius: 0.5rem;
+  padding: calc(0.7rem - 1px) calc(1.05rem - 1px);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
   transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .btn-primary {
-  background: var(--orange);
-  border: 1px solid var(--orange);
-  color: #1b0e05;
+  background: rgba(255, 122, 26, 0.14);
+  border: 2px solid var(--orange);
+  color: var(--orange-soft);
 }
 
 .btn-primary:hover {
-  background: #ff8f3f;
-  border-color: #ff8f3f;
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #1b0e05;
   transform: translateY(-1px);
 }
 
@@ -191,15 +194,15 @@ textarea {
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: transparent;
+  border: 2px solid var(--orange);
+  color: var(--orange-soft);
 }
 
 .btn-ghost:hover {
-  border-color: rgba(255, 122, 26, 0.5);
-  background: var(--surface-2);
-  color: var(--orange-soft);
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #1b0e05;
   transform: translateY(-1px);
 }
 
@@ -217,10 +220,11 @@ textarea {
 .pill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  padding: 0.35rem 0.7rem;
+  border-radius: 0.55rem;
+  border: 2px solid transparent;
+  padding: calc(0.35rem - 1px) calc(0.7rem - 1px);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -297,28 +301,31 @@ textarea {
   gap: 0.25rem;
   border: 1px solid var(--border);
   background: var(--bg-soft);
-  border-radius: 0.9rem;
+  border-radius: 0.65rem;
   padding: 0.25rem;
 }
 
 .seg-btn {
   flex: 1;
-  border-radius: 0.7rem;
-  padding: 0.55rem 0.75rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  padding: calc(0.55rem - 1px) calc(0.75rem - 1px);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--muted);
-  transition: background-color 180ms ease, color 180ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
 }
 
 .seg-btn:hover {
+  border-color: rgba(255, 122, 26, 0.35);
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
 }
 
 .seg-btn.is-active {
-  background: var(--surface-3);
-  color: var(--text);
+  border-color: var(--orange);
+  background: rgba(255, 122, 26, 0.14);
+  color: var(--orange-soft);
 }
 
 .field-label {
@@ -329,6 +336,7 @@ textarea {
 }
 
 .field {
+  display: block;
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 0.85rem;
@@ -374,20 +382,21 @@ select.field option {
 
 .file-field::file-selector-button {
   margin-right: 0.75rem;
-  border: 0;
-  border-radius: 0.6rem;
-  background: var(--orange);
-  color: #1b0e05;
-  padding: 0.5rem 0.8rem;
+  border: 2px solid var(--orange);
+  border-radius: 0.5rem;
+  background: rgba(255, 122, 26, 0.14);
+  color: var(--orange-soft);
+  padding: calc(0.5rem - 1px) calc(0.8rem - 1px);
   font: inherit;
   font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 .file-field::file-selector-button:hover {
-  background: #ff8f3f;
+  background: var(--orange);
+  color: #1b0e05;
 }
 
 .field-hint {
@@ -412,36 +421,39 @@ select.field option {
   overflow-x: auto;
   border: 1px solid var(--border);
   background: var(--surface);
-  border-radius: 0.95rem;
+  border-radius: 0.7rem;
   padding: 0.3rem;
   scrollbar-width: thin;
 }
 
 .tab-btn {
   flex: none;
-  border-radius: 0.7rem;
-  padding: 0.5rem 0.9rem;
+  border: 2px solid transparent;
+  border-radius: 0.5rem;
+  padding: calc(0.5rem - 1px) calc(0.9rem - 1px);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--muted);
   white-space: nowrap;
-  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .tab-btn:hover {
+  border-color: rgba(255, 122, 26, 0.35);
   background: var(--surface-2);
   color: var(--text);
   transform: translateY(-1px);
 }
 
 .tab-btn.is-active {
-  background: var(--orange);
-  color: #1b0e05;
+  border-color: var(--orange);
+  background: rgba(255, 122, 26, 0.14);
+  color: var(--orange-soft);
 }
 
 .download-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.9rem;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -462,11 +474,11 @@ select.field option {
   flex: none;
   align-items: center;
   justify-content: center;
-  width: 2.55rem;
-  height: 2.55rem;
-  border-radius: 0.75rem;
+  width: 2.9rem;
+  height: 2.2rem;
+  border-radius: 0.55rem;
   background: var(--brown-soft);
-  border: 1px solid rgba(192, 138, 102, 0.28);
+  border: 2px solid rgba(192, 138, 102, 0.32);
   color: var(--brown-light);
   font-size: 0.65rem;
   font-weight: 700;
@@ -475,7 +487,7 @@ select.field option {
 }
 
 .download-card:hover .download-icon {
-  transform: rotate(-6deg) scale(1.06);
+  transform: translateY(-1px);
   background: rgba(255, 122, 26, 0.16);
   border-color: rgba(255, 122, 26, 0.4);
   color: var(--orange-soft);
@@ -507,7 +519,7 @@ select.field option {
 }
 
 .card-hover:hover .feature-icon {
-  transform: rotate(-5deg) scale(1.06);
+  transform: translateY(-1px);
   background: rgba(255, 122, 26, 0.16);
   border-color: rgba(255, 122, 26, 0.4);
   color: var(--orange-soft);
@@ -612,13 +624,13 @@ select.field option {
   height: 0.65rem;
   margin-top: 1rem;
   overflow: hidden;
-  border-radius: 999px;
+  border-radius: 0.35rem;
   background: var(--surface-3);
 }
 
 .progress-bar {
   height: 100%;
-  border-radius: 999px;
+  border-radius: 0.35rem;
   background: var(--orange);
   transition: width 400ms ease;
 }
@@ -679,12 +691,12 @@ select.field option {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.1rem;
+  width: 2.5rem;
   height: 2.1rem;
-  border-radius: 0.7rem;
+  border-radius: 0.55rem;
   background: var(--brown-soft);
   color: var(--brown-light);
-  border: 1px solid rgba(192, 138, 102, 0.28);
+  border: 2px solid rgba(192, 138, 102, 0.32);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;

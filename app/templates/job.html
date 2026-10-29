@@ -24,7 +24,7 @@
         {{ job.source_label|truncate(90) }} · {{ language_names.get(job.language, job.language) }}
       </p>
     </div>
-    <div class="flex shrink-0 items-center gap-2">
+    <div class="flex shrink-0 items-stretch gap-2">
       {% if job.status == 'complete' %}
       <span class="pill pill-success">Ready</span>
       <a href="/jobs/{{ job.id }}/download/minutes" class="btn-primary">Download minutes</a>
